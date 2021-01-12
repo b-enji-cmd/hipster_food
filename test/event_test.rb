@@ -136,6 +136,16 @@ class EventTest < Minitest::Test
 
 		assert_equal [@item1,@item2,@item4,@item3], @event.inventory_items
 	end
+
+	def test_it_has_overstocked
+		@food_truck3.stock(@item3, 10)
+
+		@event.add_food_truck(@food_truck1)
+		@event.add_food_truck(@food_truck2)
+		@event.add_food_truck(@food_truck3)
+
+		@event.overstocked_items
+	end
 end
 
 

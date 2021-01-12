@@ -46,7 +46,7 @@ class Event
 		inventory_items.collect do |item| 
 			[item , {
 				quantity: 0,
-				food_trucks: []
+				food_trucks: [ ]
 				}]
 			end	
 	end
@@ -61,6 +61,27 @@ class Event
        end
      end
      	breakdown
+	end
+
+	def condition_one
+		breakdown = total_inventory
+
+		breakdown.find_all do |item,item_details|
+			item_details[:quantity] > 50 &&
+		end
+	end
+
+	def condition_two
+		breakdown = total_inventory
+		!breakdown.one? do |item,item_details|
+			#code for appearing in multiple places, couldn't get to it in time rip
+		end
+
+	end
+
+	def overstocked_items
+		(condition_one +  condition_two).uniq
+	
 	end
 
 end
