@@ -65,9 +65,80 @@ class EventTest < Minitest::Test
 		@event.add_food_truck(@food_truck1)
 		@event.add_food_truck(@food_truck2)
 		@event.add_food_truck(@food_truck3)
-		
+
 		assert_equal 148.75, @food_truck1.potential_revenue
 		assert_equal 345.00, @food_truck2.potential_revenue
 		assert_equal 243.75, @food_truck3.potential_revenue
 	end
+
+	def test_it_can_get_item_names
+		@food_truck3.stock(@item3, 10)
+
+		@event.add_food_truck(@food_truck1)
+		@event.add_food_truck(@food_truck2)
+		@event.add_food_truck(@food_truck3)
+
+		
+		assert_equal ["Peach Pie (Slice)", "Apple Pie (Slice)", "Banana Nice Cream", "Peach-Raspberry Nice Cream"], @event.get_item_names
+	end
+
+	def test_it_can_sort_items
+		@food_truck3.stock(@item3, 10)
+
+		@event.add_food_truck(@food_truck1)
+		@event.add_food_truck(@food_truck2)
+		@event.add_food_truck(@food_truck3)
+
+		@event.sorted_item_list
+		assert_equal ["Apple Pie (Slice)", "Banana Nice Cream", "Peach Pie (Slice)", "Peach-Raspberry Nice Cream"], @event.sorted_item_list
+	end
+
+	def test_it_has_total_inventory
+		@food_truck3.stock(@item3, 10)
+
+		@event.add_food_truck(@food_truck1)
+		@event.add_food_truck(@food_truck2)
+		@event.add_food_truck(@food_truck3)
+
+		 expected = {
+         @item1 => {
+           quantity: 100,
+           food_trucks: [@food_truck1, @food_truck3]
+         },
+         @item2 => {
+           quantity: 7,
+           food_trucks: [@food_truck1]
+         },
+         @item4 => {
+           quantity: 50,
+           food_trucks: [@food_truck2]
+         },
+         @item3 => {
+           quantity: 35,
+           food_trucks: [@food_truck2, @food_truck3]
+         },
+       }
+		#trying to read this terminal output is fucking insane
+		assert_equal expected, @event.total_inventory
+	end
+
+	def test_it_can_generate_the_hash_structure
+		#dont really know how to test this
+		assert_equal [], @event.generate_hash
+	end
+
+	def test_it_can_list_truck_inventory_keys
+		@food_truck3.stock(@item3, 10)
+
+		@event.add_food_truck(@food_truck1)
+		@event.add_food_truck(@food_truck2)
+		@event.add_food_truck(@food_truck3)
+
+		assert_equal [@item1,@item2,@item4,@item3], @event.inventory_items
+	end
 end
+
+
+
+
+
